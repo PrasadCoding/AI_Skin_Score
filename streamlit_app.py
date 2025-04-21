@@ -63,8 +63,8 @@ which could impact model performance and fairness.
 # --- Image Dimension Comparison ---
 st.write("### Image Dimensions Comparison")
 
-# Extract the 'Width' and 'Height' columns from the DataFrame
-train_df = df[['Width', 'Height']]
+# Extract the 'width' and 'height' columns from the DataFrame (with lowercase column names)
+train_df = df[['width', 'height']]
 
 # Randomly select new data (for this example, 3 new images)
 np.random.seed(42)
@@ -76,11 +76,11 @@ train_df['Dataset'] = 'Train'
 new_data['Dataset'] = 'New'
 combined_df = pd.concat([train_df, new_data], ignore_index=True)
 
-# Create a heatmap-style plot for Width and Height (with different colors for Train and New data)
+# Create a heatmap-style plot for width and height (with different colors for Train and New data)
 fig_image_dimensions = go.Figure()
 
 fig_image_dimensions.add_trace(go.Heatmap(
-    z=combined_df[['Width', 'Height']].T,  # Transpose to have columns as width and height
+    z=combined_df[['width', 'height']].T,  # Transpose to have columns as width and height
     colorscale='YlGnBu',  # Attractive colormap (Yellow-Green-Blue)
     zmin=0, zmax=600,  # Adjust the scale to fit your image dimension range
     colorbar=dict(title="Dimension Value"),
@@ -100,7 +100,7 @@ st.plotly_chart(fig_image_dimensions)
 st.write("""
 #### Observations:
 The heatmap above shows the comparison of **image dimensions** between the train data and the new images.
-The different colors represent the values of **Width** and **Height** for each dataset. Monitoring the image dimensions
+The different colors represent the values of **width** and **height** for each dataset. Monitoring the image dimensions
 ensures that the model is not receiving images with unexpected or incorrect sizes.
 """)
 
