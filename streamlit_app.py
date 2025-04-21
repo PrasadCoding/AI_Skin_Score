@@ -51,50 +51,54 @@ st.markdown("""
 - New data aligns well with training distribution, suggesting dimensional consistency.
 """)
 
-# ----------- Strip Plot ----------- #
+# ----------- Height Range Plot: Training vs New Heights ----------- #
 st.subheader("Height Range: Training vs New Image Heights")
 
-# Train height range
-min_height, max_height = train_df['height'].min(), train_df['height'].max()
+train_min = train_df['height'].min()
+train_max = train_df['height'].max()
 
 fig_strip = go.Figure()
 
-# Add rectangle for training height range
-fig_strip.add_trace(go.Scatter(
-    x=[0, 0, 1, 1, 0],
-    y=[min_height, max_height, max_height, min_height, min_height],
-    fill="toself",
-    mode="lines",
-    line=dict(color='lightgreen'),
-    name="Train Height Range",
-    showlegend=True
-))
+# Add the training height range as a filled rectangle
+fig_strip.add_shape(
+    type="rect",
+    x0=train_min, y0=0, x1=train_max, y1=1,
+    line=dict(color="lightgreen", width=3),
+    fillcolor="lightgreen", opacity=0.3
+)
 
 # Add vertical strips for new image heights
-for y_val in new_samples['height']:
-    fig_strip.add_trace(go.Scatter(
-        x=[0.5, 0.5],
-        y=[y_val - 1, y_val + 1],
-        mode="lines",
-        line=dict(color='crimson', width=3),
-        showlegend=False
-    ))
+for height in new_samples['height']:
+    fig_strip.add_trace(
+        go.Scatter(
+            x=[height, height],
+            y=[0, 1],
+            mode="lines",
+            line=dict(color="crimson", width=4),
+            showlegend=False
+        )
+    )
 
+# Update layout
 fig_strip.update_layout(
+    title="Train Height Range and New Image Heights",
+    xaxis_title="Height",
+    yaxis_title="Normalized Range",
+    xaxis=dict(range=[train_min - 5, train_max + 5]),
+    yaxis=dict(range=[0, 1]),
     height=400,
-    width=800,
-    yaxis_title="Height",
-    xaxis_visible=False,
-    title="New Image Heights within Train Range"
+    width=800
 )
 
 st.plotly_chart(fig_strip)
 
 st.markdown("""
 **Observations:**
-- All new image heights fall within the training range.
-- Vertical strips clearly indicate individual image values lying inside the expected bounds.
+- The green band represents the full height range of training data.
+- Each crimson strip corresponds to a new image's height.
+- This visualization helps verify whether new image heights are within acceptable bounds.
 """)
+
 
 # ----------- Class Imbalance Monitoring ----------- #
 st.header("Class Imbalance Monitoring")
