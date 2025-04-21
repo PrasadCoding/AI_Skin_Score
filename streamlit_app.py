@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 import os
 
-model_path = "acne_model.pth"  # Update this path if the file is in a different location
+model_path = "https://github.com/PrasadCoding/AI_Skin_Score/raw/refs/heads/master/acne_model.pth"  # Update this path if the file is in a different location
 if os.path.exists(model_path):
     print(f"Model file found: {model_path}")
 else:
