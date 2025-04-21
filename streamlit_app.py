@@ -2,12 +2,16 @@ import streamlit as st
 from PIL import Image, ImageOps
 import numpy as np
 import torch
-from torchvision import transforms
+from torchvision import transforms, models
 import random
+import torch.nn as nn
+
 
 # Load your trained model
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = torch.load("acne_model.pth", map_location=device)
+model = models.resnet18(pretrained=True)
+model.fc = nn.Linear(model.fc.in_features, 3)  # 3 classes
+model.load_state_dict(torch.load("acne_model.pth", map_location=device))  # Load weights
+model = model.to(device)
 model.eval()
 
 # Define the class names
