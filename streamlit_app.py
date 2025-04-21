@@ -8,7 +8,7 @@ from PIL import Image
 model = models.resnet18(pretrained=True)
 model.fc = nn.Linear(model.fc.in_features, 3)
 
-model.load_state_dict(torch.load("acne_model.pth"))
+model.load_state_dict(torch.load("acne_model.pth"), weights_only=True)
 model.eval() 
 
 print(model)
