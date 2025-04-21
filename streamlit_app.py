@@ -13,7 +13,9 @@ model = models.resnet18(pretrained=False)  # Set pretrained=False since we are l
 model.fc = nn.Linear(model.fc.in_features, 3)  # Adjust the final layer to match the model's classes
 
 # Load the model's weights (state_dict) from the saved file
-model.load_state_dict(torch.load("acne_model.pth", map_location=device))
+# Load the model's weights (state_dict) from the saved file
+model.load_state_dict(torch.load("acne_model.pth", map_location=device, weights_only=False))
+
 
 # Move the model to the appropriate device
 model = model.to(device)
