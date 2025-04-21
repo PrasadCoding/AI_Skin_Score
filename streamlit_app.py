@@ -8,6 +8,7 @@ import torch.nn as nn
 
 
 # Load your trained model
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = models.resnet18(pretrained=True)
 model.fc = nn.Linear(model.fc.in_features, 3)  # 3 classes
 model.load_state_dict(torch.load("acne_model.pth", map_location=device))  # Load weights
