@@ -15,6 +15,6 @@ model = models.resnet18(pretrained=True)
 model.fc = nn.Linear(model.fc.in_features, 3)  # 3 classes
 model = model.to(device)
 
-model.load_state_dict(torch.load("acne_model.pth"))
+model.load_state_dict(torch.load("acne_model.pth"), weights_only=False)
 model.eval()
 
