@@ -1,17 +1,14 @@
-import streamlit as st
-import os
-from pathlib import Path
 import torch
-from torch import nn, optim
-from torchvision import datasets, transforms, models
-from torch.utils.data import DataLoader, random_split
-import matplotlib.pyplot as plt
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import models, transforms
+import streamlit as st
+from PIL import Image
 
-import os
+model = models.resnet18(pretrained=True)
+model.fc = nn.Linear(model.fc.in_features, 3)
 
-model_path = "https://github.com/PrasadCoding/AI_Skin_Score/raw/refs/heads/master/acne_model.pth"  # Update this path if the file is in a different location
-if os.path.exists(model_path):
-    print(f"Model file found: {model_path}")
-else:
-    print(f"Model file not found: {model_path}")
+model.load_state_dict(torch.load("acne_model.pth"))
+model.eval() 
 
+print(model)
